@@ -348,6 +348,7 @@ void ViewStyle::CalculateMarginWidthAndMask() noexcept {
 			maskInLine &= ~maskBit;
 			break;
 		case MarkerSymbol::Background:
+		case MarkerSymbol::BackFore:
 		case MarkerSymbol::Underline:
 			maskInLine &= ~maskBit;
 			maskDrawInText |= maskDefinedMarkers & maskBit;
@@ -547,7 +548,8 @@ ColourOptional ViewStyle::Background(int marksOfLine, bool caretActive, bool lin
 	if (!background && marksOfLine) {
 		int marks = marksOfLine;
 		for (int markBit = 0; (markBit <= MarkerMax) && marks; markBit++) {
-			if ((marks & 1) && (markers[markBit].markType == MarkerSymbol::Background) &&
+			if ((marks & 1) && ((markers[markBit].markType == MarkerSymbol::Background) ||
+			  (markers[markBit].markType == MarkerSymbol::BackFore)) &&
 				(markers[markBit].layer == Layer::Base)) {
 				background = markers[markBit].back;
 			}

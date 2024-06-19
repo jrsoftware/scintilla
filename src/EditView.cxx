@@ -1590,8 +1590,17 @@ void EditView::DrawCarets(Surface *surface, const EditModel &model, const ViewSt
 					rcCaret.right = rcCaret.left + vsDraw.caret.width;
 				}
 				const Element elementCaret = mainCaret ? Element::Caret : Element::CaretAdditional;
-				const ColourRGBA caretColour = vsDraw.ElementColourForced(elementCaret);
+				ColourRGBA caretColour = vsDraw.ElementColourForced(elementCaret);
 				//assert(caretColour.IsOpaque());
+
+				int marks = model.GetMark(lineDoc);
+				for (int markBit = 0; (markBit <= MarkerMax) && marks; markBit++) {
+					if ((marks & 1) && (vsDraw.markers[markBit].markType == MarkerSymbol::BackFore)) {
+						caretColour = vsDraw.markers[markBit].fore;
+					}
+					marks >>= 1;
+				}
+
 				if (drawBlockCaret) {
 					DrawBlockCaret(surface, model, vsDraw, ll, subLine, xStart, offset, posCaret.Position(), rcCaret, caretColour);
 				} else {
@@ -1875,7 +1884,8 @@ void DrawTranslucentLineState(Surface *surface, const EditModel &model, const Vi
 	int marksDrawnInText = marksOfLine & vsDraw.maskDrawInText;
 	for (int markBit = 0; (markBit <= MarkerMax) && marksDrawnInText; markBit++) {
 		if ((marksDrawnInText & 1) && (vsDraw.markers[markBit].layer == layer)) {
-			if (vsDraw.markers[markBit].markType == MarkerSymbol::Background) {
+			if ((vsDraw.markers[markBit].markType == MarkerSymbol::Background) ||
+			  (vsDraw.markers[markBit].markType == MarkerSymbol::BackFore)) {
 				surface->FillRectangleAligned(rcLine, vsDraw.markers[markBit].BackWithAlpha());
 			} else if (vsDraw.markers[markBit].markType == MarkerSymbol::Underline) {
 				PRectangle rcUnderline = rcLine;
@@ -2114,7 +2124,7 @@ void EditView::DrawIndentGuide(Surface *surface, XYPOSITION start, PRectangle rc
 }
 
 void EditView::DrawForeground(Surface *surface, const EditModel &model, const ViewStyle &vsDraw, const LineLayout *ll,
-	int xStart, PRectangle rcLine, int subLine, Sci::Line lineVisible, Range lineRange, Sci::Position posLineStart,
+	int xStart, PRectangle rcLine, int subLine, Sci::Line line, Sci::Line lineVisible, Range lineRange, Sci::Position posLineStart,
 	ColourOptional background) {
 
 	const bool selBackDrawn = vsDraw.SelectionBackgroundDrawn();
@@ -2187,6 +2197,15 @@ void EditView::DrawForeground(Surface *surface, const EditModel &model, const Vi
 					}
 				}
 			}
+
+			int marks = model.GetMark(line);
+			for (int markBit = 0; (markBit <= MarkerMax) && marks; markBit++) {
+				if ((marks & 1) && (vsDraw.markers[markBit].markType == MarkerSymbol::BackFore)) {
+					textFore = vsDraw.markers[markBit].fore;
+				}
+				marks >>= 1;
+			}
+
 			InSelection inSelection = vsDraw.selection.visible ? model.sel.CharacterInSelection(iDoc) : InSelection::inNone;
 			if (FlagSet(vsDraw.caret.style, CaretStyle::Curses) && (inSelection == InSelection::inMain))
 				inSelection = CharacterInCursesSelection(iDoc, model, vsDraw);
@@ -2437,7 +2456,7 @@ void EditView::DrawLine(Surface *surface, const EditModel &model, const ViewStyl
 		}
 		DrawTranslucentLineState(surface, model, vsDraw, ll, line, rcLine, subLine, Layer::UnderText);
 		DrawForeground(surface, model, vsDraw, ll,
-			xStart, rcLine, subLine, lineVisible, lineRange, posLineStart,
+			xStart, rcLine, subLine, line, lineVisible, lineRange, posLineStart,
 			background);
 	}
 
