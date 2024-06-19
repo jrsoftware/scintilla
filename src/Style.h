@@ -28,6 +28,7 @@ struct FontSpecification {
 };
 
 struct FontMeasurements {
+  int lineHeight = 2;
 	XYPOSITION ascent = 1;
 	XYPOSITION descent = 1;
 	XYPOSITION capitalHeight = 1;	// Top of capital letter to baseline: ascent - internal leading

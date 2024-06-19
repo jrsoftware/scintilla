@@ -105,6 +105,7 @@ enum StyleIndices {
 	StyleIndentGuide = static_cast<int>(Scintilla::StylesCommon::IndentGuide),
 	StyleCallTip = static_cast<int>(Scintilla::StylesCommon::CallTip),
 	StyleFoldDisplayText = static_cast<int>(Scintilla::StylesCommon::FoldDisplayText),
+	StyleAutoCompletion = static_cast<int>(Scintilla::StylesCommon::AutoCompletion),
 };
 
 /**

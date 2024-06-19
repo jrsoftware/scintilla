@@ -217,7 +217,8 @@ typedef sptr_t (*SciFnDirectStatus)(sptr_t ptr, unsigned int iMessage, uptr_t wP
 #define STYLE_INDENTGUIDE 37
 #define STYLE_CALLTIP 38
 #define STYLE_FOLDDISPLAYTEXT 39
-#define STYLE_LASTPREDEFINED 39
+#define STYLE_AUTOCOMPLETION 40
+#define STYLE_LASTPREDEFINED 40
 #define STYLE_MAX 255
 #define SC_CHARSET_ANSI 0
 #define SC_CHARSET_DEFAULT 1

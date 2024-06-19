@@ -274,7 +274,7 @@ void ScintillaBase::AutoCompleteStart(Sci::Position lenEntered, const char *list
 	};
 
 	ac.Start(wMain, idAutoComplete, sel.MainCaret(), PointMainCaret(),
-				lenEntered, vs.lineHeight, IsUnicodeMode(), technology, options);
+				lenEntered, vs.styles[StyleAutoCompletion].lineHeight, IsUnicodeMode(), technology, options);
 
 	const PRectangle rcClient = GetClientRectangle();
 	Point pt = LocationFromPosition(sel.MainCaret() - lenEntered);
@@ -307,8 +307,8 @@ void ScintillaBase::AutoCompleteStart(Sci::Position lenEntered, const char *list
 	rcac.right = rcac.left + widthLB;
 	rcac.bottom = static_cast<XYPOSITION>(std::min(static_cast<int>(rcac.top) + heightLB, static_cast<int>(rcPopupBounds.bottom)));
 	ac.lb->SetPositionRelative(rcac, &wMain);
-	ac.lb->SetFont(vs.styles[StyleDefault].font.get());
-	const int aveCharWidth = static_cast<int>(vs.styles[StyleDefault].aveCharWidth);
+	ac.lb->SetFont(vs.styles[StyleAutoCompletion].font.get());
+	const int aveCharWidth = static_cast<int>(vs.styles[StyleAutoCompletion].aveCharWidth);
 	ac.lb->SetAverageCharWidth(aveCharWidth);
 	ac.lb->SetDelegate(this);
 
