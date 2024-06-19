@@ -3261,9 +3261,9 @@ struct Sci_TextToFindFull {
 
           <td>38</td>
 
-          <td> Call tips normally use the font attributes defined by <code>STYLE_DEFAULT</code>.
+          <td>Call tips normally use the font attributes defined by <code>STYLE_DEFAULT</code>.
           Use of <a class="seealso" href="#SCI_CALLTIPUSESTYLE"><code>SCI_CALLTIPUSESTYLE</code></a>
-            causes call tips to use this style instead. Only the font face name, font size,
+          causes call tips to use this style instead. Only the font face name, font size,
           foreground and background colours and character set attributes are used.</td>
         </tr>
 
@@ -3276,9 +3276,20 @@ struct Sci_TextToFindFull {
         </tr>
 
         <tr>
+          <th align="left"><code>STYLE_AUTOCOMPLETION</code></th>
+
+          <td>40</td>
+
+          <td>Autocompletion lists normally use the font attributes defined by <code>STYLE_DEFAULT</code>.
+          Use of <a class="seealso" href="#SCI_AUTOCUSESTYLE"><code>SCI_AUTOCUSESTYLE</code></a>
+          causes autocompletion lists to use this style instead. Only the font face name, font size,
+          and character set attributes are used.</td>
+        </tr>
+
+        <tr>
           <th align="left"><code>STYLE_LASTPREDEFINED</code></th>
 
-          <td>39</td>
+          <td>40</td>
 
           <td>To make it easier for client code to discover the range of styles that are
           predefined, this is set to the style number of the last predefined style.</td>
@@ -6225,6 +6236,12 @@ struct Sci_TextToFindFull {
 
     <p>To make use of autocompletion you must monitor each character added to the document. See
     <code>SciTEBase::CharAdded()</code> in SciTEBase.cxx for an example of autocompletion.</p>
+    
+    <p>Autocompletion list normally display characters using the font facename, size and character set
+    defined by <code><a class="message" href="#StyleDefinition">STYLE_DEFAULT</a></code>. You can choose to
+    use <code><a class="message" href="#StyleDefinition">STYLE_AUTOCOMPLETION</a></code> to define the
+    facename, size and character set with <code><a class="seealso" href="#SCI_AUTOCUSESTYLE">SCI_AUTOCUSESTYLE</a></code>.</p>
+    
     <code><a class="message" href="#SCI_AUTOCSHOW">SCI_AUTOCSHOW(position lengthEntered, const char
     *itemList)</a><br />
      <a class="message" href="#SCI_AUTOCCANCEL">SCI_AUTOCCANCEL</a><br />
@@ -6493,6 +6510,13 @@ struct Sci_TextToFindFull {
       If zero (the default) then the list's width is calculated to fit the item with the most characters. Any items that cannot be fully displayed within
       the available width are indicated by the presence of ellipsis.
      </p>
+
+    <p>
+      <b id="SCI_AUTOCUSESTYLE">SCI_AUTOCUSESTYLE</b><br />
+      
+      This message changes the style used for autocompletion lists from <code>STYLE_DEFAULT</code> to
+      <code>STYLE_AUTOCOMPLETION</code>.
+    </p>
 
     <p>
      <b id="SC_ELEMENT_LIST">SC_ELEMENT_LIST : colouralpha</b><br />
