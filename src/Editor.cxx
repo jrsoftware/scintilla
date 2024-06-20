@@ -2919,7 +2919,9 @@ void Editor::NotifyMacroRecord(Message iMessage, uptr_t wParam, sptr_t lParam) {
 	case Message::Cancel:
 	case Message::DeleteBack:
 	case Message::Tab:
+	case Message::LineTab:
 	case Message::BackTab:
+	case Message::LineBackTab:
 	case Message::FormFeed:
 	case Message::VCHome:
 	case Message::VCHomeExtend:
@@ -3931,7 +3933,8 @@ int Editor::KeyCommand(Message iMessage) {
 		EnsureCaretVisible();
 		break;
 	case Message::Tab:
-		Indent(true);
+	case Message::LineTab:
+		Indent(true, iMessage == Message::LineTab);
 		if (caretSticky == CaretSticky::Off) {
 			SetLastXChosen();
 		}
@@ -3939,7 +3942,8 @@ int Editor::KeyCommand(Message iMessage) {
 		ShowCaretAtCurrentPosition();		// Avoid blinking
 		break;
 	case Message::BackTab:
-		Indent(false);
+	case Message::LineBackTab:
+		Indent(false, iMessage == Message::LineBackTab);
 		if ((caretSticky == CaretSticky::Off) || (caretSticky == CaretSticky::WhiteSpace)) {
 			SetLastXChosen();
 		}
@@ -4046,14 +4050,14 @@ int Editor::KeyDownWithModifiers(Keys key, KeyMod modifiers, bool *consumed) {
 	}
 }
 
-void Editor::Indent(bool forwards) {
+void Editor::Indent(bool forwards, bool forceMultilineBehaviour) {
 	UndoGroup ug(pdoc);
 	for (size_t r=0; r<sel.Count(); r++) {
 		const Sci::Line lineOfAnchor =
 			pdoc->SciLineFromPosition(sel.Range(r).anchor.Position());
 		Sci::Position caretPosition = sel.Range(r).caret.Position();
 		const Sci::Line lineCurrentPos = pdoc->SciLineFromPosition(caretPosition);
-		if (lineOfAnchor == lineCurrentPos) {
+		if (lineOfAnchor == lineCurrentPos && !forceMultilineBehaviour) {
 			if (forwards) {
 				pdoc->DeleteChars(sel.Range(r).Start().Position(), sel.Range(r).Length());
 				caretPosition = sel.Range(r).caret.Position();
@@ -8131,7 +8135,9 @@ sptr_t Editor::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) {
 	case Message::Cancel:
 	case Message::DeleteBack:
 	case Message::Tab:
+	case Message::LineTab:
 	case Message::BackTab:
+	case Message::LineBackTab:
 	case Message::NewLine:
 	case Message::FormFeed:
 	case Message::VCHome:
