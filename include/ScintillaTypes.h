@@ -123,8 +123,7 @@ enum class StylesCommon {
 	IndentGuide = 37,
 	CallTip = 38,
 	FoldDisplayText = 39,
-	AutoCompletion = 40,
-	LastPredefined = 40,
+	LastPredefined = 39,
 	Max = 255,
 };
 

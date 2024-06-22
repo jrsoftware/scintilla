@@ -217,8 +217,7 @@ typedef sptr_t (*SciFnDirectStatus)(sptr_t ptr, unsigned int iMessage, uptr_t wP
 #define STYLE_INDENTGUIDE 37
 #define STYLE_CALLTIP 38
 #define STYLE_FOLDDISPLAYTEXT 39
-#define STYLE_AUTOCOMPLETION 40
-#define STYLE_LASTPREDEFINED 40
+#define STYLE_LASTPREDEFINED 39
 #define STYLE_MAX 255
 #define SC_CHARSET_ANSI 0
 #define SC_CHARSET_DEFAULT 1
@@ -461,7 +460,8 @@ typedef sptr_t (*SciFnDirectStatus)(sptr_t ptr, unsigned int iMessage, uptr_t wP
 #define SCI_AUTOCGETMAXWIDTH 2209
 #define SCI_AUTOCSETMAXHEIGHT 2210
 #define SCI_AUTOCGETMAXHEIGHT 2211
-#define SCI_AUTOCUSESTYLE 2806
+#define SCI_AUTOCSETSTYLEOFFSET 2806
+#define SCI_AUTOCGETSTYLEOFFSET 2807
 #define SCI_SETINDENT 2122
 #define SCI_GETINDENT 2123
 #define SCI_SETUSETABS 2124
