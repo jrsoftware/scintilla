@@ -666,15 +666,16 @@
 
     <p><b id="SCI_RELEASEALLEXTENDEDSTYLES">SCI_RELEASEALLEXTENDEDSTYLES</b><br />
     <b id="SCI_ALLOCATEEXTENDEDSTYLES">SCI_ALLOCATEEXTENDEDSTYLES(int numberStyles) &rarr; int</b><br />
-     Extended styles are used for features like textual margins and annotations as well as internally by Scintilla.
-     They are outside the range 0..255 used for the styles bytes associated with document bytes.
+     Extended styles are used for features like textual margins and annotations and autocompletion lists as well as
+     internally by Scintilla. They are outside the range 0..255 used for the styles bytes associated with document bytes.
      These functions manage the use of extended styles to ensures that components cooperate in defining styles.
      <code>SCI_RELEASEALLEXTENDEDSTYLES</code> releases any extended styles allocated by the container.
      <code>SCI_ALLOCATEEXTENDEDSTYLES</code> allocates a range of style numbers after the byte style values and returns
      the number of the first allocated style.
-     Ranges for margin and annotation styles should be allocated before calling
+     Ranges for margin, annotation and autocompletion styles should be allocated before calling
      <a class="seealso" href="#SCI_MARGINSETSTYLEOFFSET">SCI_MARGINSETSTYLEOFFSET</a> or
-     <a class="seealso" href="#SCI_ANNOTATIONSETSTYLEOFFSET">SCI_ANNOTATIONSETSTYLEOFFSET</a>.</p>
+     <a class="seealso" href="#SCI_ANNOTATIONSETSTYLEOFFSET">SCI_ANNOTATIONSETSTYLEOFFSET</a> or
+     <a class="seealso" href="#SCI_AUTOCSETSTYLEOFFSET">SCI_AUTOCSETSTYLEOFFSET</a>.</p>
 
     <p><b id="Sci_TextRange">Sci_TextRange</b> and <b id="Sci_CharacterRange">Sci_CharacterRange</b><br />
      These structures are defined to be exactly the same shape as the Win32 <code>TEXTRANGE</code>
@@ -3276,20 +3277,9 @@ struct Sci_TextToFindFull {
         </tr>
 
         <tr>
-          <th align="left"><code>STYLE_AUTOCOMPLETION</code></th>
-
-          <td>40</td>
-
-          <td>Autocompletion lists normally use the font attributes defined by <code>STYLE_DEFAULT</code>.
-          Use of <a class="seealso" href="#SCI_AUTOCUSESTYLE"><code>SCI_AUTOCUSESTYLE</code></a>
-          causes autocompletion lists to use this style instead. Only the font face name, font size,
-          and character set attributes are used.</td>
-        </tr>
-
-        <tr>
           <th align="left"><code>STYLE_LASTPREDEFINED</code></th>
 
-          <td>40</td>
+          <td>39</td>
 
           <td>To make it easier for client code to discover the range of styles that are
           predefined, this is set to the style number of the last predefined style.</td>
@@ -6239,8 +6229,8 @@ struct Sci_TextToFindFull {
     
     <p>Autocompletion list normally display characters using the font facename, size and character set
     defined by <code><a class="message" href="#StyleDefinition">STYLE_DEFAULT</a></code>. You can choose to
-    use <code><a class="message" href="#StyleDefinition">STYLE_AUTOCOMPLETION</a></code> to define the
-    facename, size and character set with <code><a class="seealso" href="#SCI_AUTOCUSESTYLE">SCI_AUTOCUSESTYLE</a></code>.</p>
+    use an extended style to define the facename, size and character set with <code>
+    <a class="seealso" href="#SCI_AUTOCSETSTYLEOFFSET">SCI_AUTOCSETSTYLEOFFSET</a></code>.</p>
     
     <code><a class="message" href="#SCI_AUTOCSHOW">SCI_AUTOCSHOW(position lengthEntered, const char
     *itemList)</a><br />
@@ -6512,10 +6502,15 @@ struct Sci_TextToFindFull {
      </p>
 
     <p>
-      <b id="SCI_AUTOCUSESTYLE">SCI_AUTOCUSESTYLE</b><br />
+      <b id="SCI_AUTOCSETSTYLEOFFSET">SCI_AUTOCSETSTYLEOFFSET</b><br />
+      <b id="SCI_AUTOCGETSTYLEOFFSET">SCI_AUTOCGETSTYLEOFFSET &rarr; int</b><br />
       
-      This message changes the style used for autocompletion lists from <code>STYLE_DEFAULT</code> to
-      <code>STYLE_AUTOCOMPLETION</code>.
+      A separate autocompletion list style may specified by setting a style offset. If not set autocompletion lists use STYLE_DEFAULT and otherwise have
+      the offset added to this before looking up the style.
+    </p>
+    <p>
+      Always call <a class="seealso" href="#SCI_ALLOCATEEXTENDEDSTYLES">SCI_ALLOCATEEXTENDEDSTYLES(1)</a>
+      before <code>SCI_ANNOTATIONSETSTYLEOFFSET</code> and use the result as the argument to <code>SCI_AUTOCSETSTYLEOFFSET</code>.
     </p>
 
     <p>
