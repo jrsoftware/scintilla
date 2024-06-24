@@ -675,7 +675,7 @@
      Ranges for margin, annotation and autocompletion styles should be allocated before calling
      <a class="seealso" href="#SCI_MARGINSETSTYLEOFFSET">SCI_MARGINSETSTYLEOFFSET</a> or
      <a class="seealso" href="#SCI_ANNOTATIONSETSTYLEOFFSET">SCI_ANNOTATIONSETSTYLEOFFSET</a> or
-     <a class="seealso" href="#SCI_AUTOCSETSTYLEOFFSET">SCI_AUTOCSETSTYLEOFFSET</a>.</p>
+     <a class="seealso" href="#SCI_AUTOCSETSTYLE">SCI_AUTOCSETSTYLE</a>.</p>
 
     <p><b id="Sci_TextRange">Sci_TextRange</b> and <b id="Sci_CharacterRange">Sci_CharacterRange</b><br />
      These structures are defined to be exactly the same shape as the Win32 <code>TEXTRANGE</code>
@@ -6227,11 +6227,6 @@ struct Sci_TextToFindFull {
     <p>To make use of autocompletion you must monitor each character added to the document. See
     <code>SciTEBase::CharAdded()</code> in SciTEBase.cxx for an example of autocompletion.</p>
     
-    <p>Autocompletion list normally display characters using the font facename, size and character set
-    defined by <code><a class="message" href="#StyleDefinition">STYLE_DEFAULT</a></code>. You can choose to
-    use an extended style to define the facename, size and character set with <code>
-    <a class="seealso" href="#SCI_AUTOCSETSTYLEOFFSET">SCI_AUTOCSETSTYLEOFFSET</a></code>.</p>
-    
     <code><a class="message" href="#SCI_AUTOCSHOW">SCI_AUTOCSHOW(position lengthEntered, const char
     *itemList)</a><br />
      <a class="message" href="#SCI_AUTOCCANCEL">SCI_AUTOCCANCEL</a><br />
@@ -6502,15 +6497,13 @@ struct Sci_TextToFindFull {
      </p>
 
     <p>
-      <b id="SCI_AUTOCSETSTYLEOFFSET">SCI_AUTOCSETSTYLEOFFSET</b><br />
-      <b id="SCI_AUTOCGETSTYLEOFFSET">SCI_AUTOCGETSTYLEOFFSET &rarr; int</b><br />
-      
-      A separate autocompletion list style may specified by setting a style offset. If not set autocompletion lists use STYLE_DEFAULT and otherwise have
-      the offset added to this before looking up the style.
-    </p>
-    <p>
-      Always call <a class="seealso" href="#SCI_ALLOCATEEXTENDEDSTYLES">SCI_ALLOCATEEXTENDEDSTYLES(1)</a>
-      before <code>SCI_ANNOTATIONSETSTYLEOFFSET</code> and use the result as the argument to <code>SCI_AUTOCSETSTYLEOFFSET</code>.
+      <b id="SCI_AUTOCSETSTYLE">SCI_AUTOCSETSTYLE</b><br />
+      <b id="SCI_AUTOCGETSTYLE">SCI_AUTOCGETSTYLE &rarr; int</b><br />
+
+      Get or set the style used by autocompletion list to determine the font facename, size and character set used to display characters. Defaults
+      to <code><a class="message" href="#StyleDefinition">STYLE_DEFAULT</a></code>. Always call
+      <a class="seealso" href="#SCI_ALLOCATEEXTENDEDSTYLES">SCI_ALLOCATEEXTENDEDSTYLES(1)</a> before <code>SCI_AUTOCSETSTYLE</code> and use the
+      result as the argument to <code>SCI_AUTOCSETSTYLE</code> and <code>SCI_STYLESETFONT</code> and others.
     </p>
 
     <p>
