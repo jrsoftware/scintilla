@@ -3156,7 +3156,7 @@ set void EOLAnnotationSetVisible=2745(EOLAnnotationVisible visible,)
 # Get the visibility for the end of line annotations for a view
 get EOLAnnotationVisible EOLAnnotationGetVisible=2746(,)
 
-# Set the start of the range of style numbers used for end of line annotations
+# Get the start of the range of style numbers used for end of line annotations
 set void EOLAnnotationSetStyleOffset=2747(int style,)
 
 # Get the start of the range of style numbers used for end of line annotations
