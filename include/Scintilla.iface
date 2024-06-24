@@ -2724,7 +2724,7 @@ get int MarginGetStyles=2535(line line, stringresult styles)
 # Clear the margin text on all lines
 fun void MarginTextClearAll=2536(,)
 
-# Set the start of the range of style numbers used for margin text
+# Get the start of the range of style numbers used for margin text
 set void MarginSetStyleOffset=2537(int style,)
 
 # Get the start of the range of style numbers used for margin text
@@ -2778,7 +2778,7 @@ set void AnnotationSetVisible=2548(AnnotationVisible visible,)
 # Get the visibility for the annotations for a view
 get AnnotationVisible AnnotationGetVisible=2549(,)
 
-# Set the start of the range of style numbers used for annotations
+# Get the start of the range of style numbers used for annotations
 set void AnnotationSetStyleOffset=2550(int style,)
 
 # Get the start of the range of style numbers used for annotations
