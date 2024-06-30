@@ -6575,6 +6575,7 @@ struct Sci_TextToFindFull {
      <a class="message" href="#SCI_CALLTIPSETBACK">SCI_CALLTIPSETBACK(colour back)</a><br />
      <a class="message" href="#SCI_CALLTIPSETFORE">SCI_CALLTIPSETFORE(colour fore)</a><br />
      <a class="message" href="#SCI_CALLTIPSETFOREHLT">SCI_CALLTIPSETFOREHLT(colour fore)</a><br />
+     <a class="message" href="#SCI_CALLTIPSETFOREBORDER">SCI_CALLTIPSETFOREBORDER(colour foreLight, colour foreShade)</a><br />
      <a class="message" href="#SCI_CALLTIPUSESTYLE">SCI_CALLTIPUSESTYLE(int tabSize)</a><br />
      <a class="message" href="#SCI_CALLTIPSETPOSITION">SCI_CALLTIPSETPOSITION(bool above)</a><br />
     </code>
@@ -6639,11 +6640,18 @@ struct Sci_TextToFindFull {
      The colour of highlighted call tip text can be set with this message; the default colour
     is dark blue.</p>
 
+    <p><b id="SCI_CALLTIPSETFOREBORDER">SCI_CALLTIPSETFOREBORDER(<a class="jump" href="#colour">colour</a> foreLight,
+     <a class="jump" href="#colour">colour</a> foreShade)</b><br />
+    The colour of the border of the call tip can be set with this message; <code class="parameter">foreLight</code>
+    is the colour of the top and left parts of the border and <code class="parameter">foreShade</code> is the colour of
+    the bottom and right parts of the border; the default colours are silver and black respectively.</p>
+
     <p><b id="SCI_CALLTIPUSESTYLE">SCI_CALLTIPUSESTYLE(int tabSize)</b><br />
      This message changes the style used for call tips from <code>STYLE_DEFAULT</code> to
     <code>STYLE_CALLTIP</code> and sets a tab size in screen pixels. If <code class="parameter">tabsize</code> is
     less than 1, Tab characters are not treated specially. Once this call has been used, the
-    call tip foreground and background colours are also taken from the style.</p>
+    call tip foreground and background colours are also taken from the style but the highlight and border
+    colours are not.</p>
 
     <p><b id="SCI_CALLTIPSETPOSITION">SCI_CALLTIPSETPOSITION(bool above)</b><br />
      By default the calltip is displayed below the text, setting above to <code>true</code>
