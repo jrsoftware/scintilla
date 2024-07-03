@@ -66,6 +66,7 @@ ScintillaBase::ScintillaBase() {
 	displayPopupMenu = PopUp::All;
 	listType = 0;
 	maxListWidth = 0;
+	minListWidth = 0;
 	multiAutoCMode = MultiAutoComplete::Once;
 }
 
@@ -317,6 +318,8 @@ void ScintillaBase::AutoCompleteStart(Sci::Position lenEntered, const char *list
 	// Fiddle the position of the list so it is right next to the target and wide enough for all its strings
 	PRectangle rcList = ac.lb->GetDesiredRect();
 	const int heightAlloced = static_cast<int>(rcList.bottom - rcList.top);
+	if (minListWidth != 0)
+		widthLB = aveCharWidth*minListWidth;
 	widthLB = std::max(widthLB, static_cast<int>(rcList.right - rcList.left));
 	if (maxListWidth != 0)
 		widthLB = std::min(widthLB, aveCharWidth*maxListWidth);
@@ -940,6 +943,13 @@ sptr_t ScintillaBase::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) {
 
 	case Message::AutoCGetMaxWidth:
 		return maxListWidth;
+
+	case Message::AutoCSetMinWidth:
+		minListWidth = static_cast<int>(wParam);
+		break;
+
+	case Message::AutoCGetMinWidth:
+		return minListWidth;
 
 	case Message::RegisterImage:
 		ac.lb->RegisterImage(static_cast<int>(wParam), ConstCharPtrFromSPtr(lParam));
