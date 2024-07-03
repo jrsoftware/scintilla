@@ -6273,6 +6273,8 @@ struct Sci_TextToFindFull {
      <a class="message" href="#SCI_AUTOCGETMAXHEIGHT">SCI_AUTOCGETMAXHEIGHT &rarr; int</a><br />
      <a class="message" href="#SCI_AUTOCSETMAXWIDTH">SCI_AUTOCSETMAXWIDTH(int characterCount)</a><br />
      <a class="message" href="#SCI_AUTOCGETMAXWIDTH">SCI_AUTOCGETMAXWIDTH &rarr; int</a><br />
+     <a class="message" href="#SCI_AUTOCSETMINWIDTH">SCI_AUTOCSETMINWIDTH(int characterCount)</a><br />
+     <a class="message" href="#SCI_AUTOCGETMINWIDTH">SCI_AUTOCGETMINWIDTH &rarr; int</a><br />
      <a class="element" href="#SC_ELEMENT_LIST">SC_ELEMENT_LIST : colouralpha</a><br />
      <a class="element" href="#SC_ELEMENT_LIST_BACK">SC_ELEMENT_LIST_BACK : colouralpha</a><br />
      <a class="element" href="#SC_ELEMENT_LIST_SELECTED">SC_ELEMENT_LIST_SELECTED : colouralpha</a><br />
@@ -6494,7 +6496,15 @@ struct Sci_TextToFindFull {
       the available width are indicated by the presence of ellipsis.
      </p>
 
-    <p>
+     <p>
+      <b id="SCI_AUTOCSETMINWIDTH">SCI_AUTOCSETMINWIDTH(int characterCount)</b><br />
+      <b id="SCI_AUTOCGETMINWIDTH">SCI_AUTOCGETMINWIDTH &rarr; int</b><br />
+
+      Get or set the minimum width of an autocompletion list expressed as the number of characters. If zero (the default) then the list's width is
+      calculated to fit the item with the most characters.
+     </p>
+
+     <p>
      <b id="SC_ELEMENT_LIST">SC_ELEMENT_LIST : colouralpha</b><br />
      <b id="SC_ELEMENT_LIST_BACK">SC_ELEMENT_LIST_BACK : colouralpha</b><br />
      <b id="SC_ELEMENT_LIST_SELECTED">SC_ELEMENT_LIST_SELECTED : colouralpha</b><br />
